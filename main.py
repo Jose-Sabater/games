@@ -31,7 +31,7 @@ for i in range(num_of_enemies):
     enemies.append(Enemy())
 
 # Bullet
-bulletImg = pygame.image.load("./static/icons/bullet.png")
+bullet_img = pygame.image.load("./static/icons/bullet.png")
 bulletX = random.randint(0, 800)
 bulletY = 500
 bulletYchange = player.bullet_speed
@@ -42,6 +42,10 @@ score_value = 0
 font = pygame.font.Font("freesansbold.ttf", 32)
 scoreX = 10
 scoreY = 10
+
+# Health
+full_heart_img = pygame.image.load("./static/icons/full_heart.png")
+empty_heart_img = pygame.image.load("./static/icons/empty_heart.png")
 
 
 def show_score(x: int, y: int) -> None:
@@ -57,10 +61,10 @@ def render_enemy(x: int, y: int, i: int) -> None:
     screen.blit(enemies[i].img, (x, y))
 
 
-def fire_bullet(x: int, y: int) -> None:
+def render_bullet(x: int, y: int) -> None:
     global bullet_state
     bullet_state = "fire"
-    screen.blit(bulletImg, (x + 16, y + 10))
+    screen.blit(bullet_img, (x + 16, y + 10))
 
 
 def is_collision(enemyX: int, enemyY: int, bulletX: int, bulletY: int) -> bool:
@@ -69,6 +73,26 @@ def is_collision(enemyX: int, enemyY: int, bulletX: int, bulletY: int) -> bool:
         return True
     else:
         return False
+
+
+def render_health(health: int) -> None:
+    if health == 3:
+        screen.blit(full_heart_img, (10, 550))
+        screen.blit(full_heart_img, (80, 550))
+        screen.blit(full_heart_img, (150, 550))
+    if health == 2:
+        screen.blit(empty_heart_img, (10, 550))
+        screen.blit(full_heart_img, (80, 550))
+        screen.blit(full_heart_img, (150, 550))
+    if health == 1:
+        screen.blit(empty_heart_img, (10, 550))
+        screen.blit(empty_heart_img, (80, 550))
+        screen.blit(full_heart_img, (150, 550))
+
+
+def alien_hit(enemy_y: int) -> bool:
+    if enemy_y >= 450:
+        return True
 
 
 # Game Loop
@@ -91,7 +115,7 @@ while running:
             if event.key == pygame.K_SPACE:
                 if bullet_state == "ready":
                     bulletX = player.x
-                    fire_bullet(player.x, bulletY)
+                    render_bullet(player.x, bulletY)
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 player.xchange = 0
@@ -104,6 +128,7 @@ while running:
     elif player.x >= 736:
         player.x = 736
 
+    # Enemy movement and collisions
     for i, _ in enumerate(enemies):
         enemies[i].x += enemies[i].xchange
         if enemies[i].x <= 0:
@@ -121,7 +146,18 @@ while running:
             bullet_state = "ready"
             score_value += 1
             print(score_value)
+
+        # Alien dmg
+        alien_dmg = alien_hit(enemies[i].y)
+        if alien_dmg:
+            enemies[i] = Enemy()
+            player.health -= 1
+            print("You are hit!")
+
         render_enemy(enemies[i].x, enemies[i].y, i)
+
+    # Health
+    render_health(player.health)
 
     # Bullet movement
     if bulletY <= 0:
@@ -129,7 +165,7 @@ while running:
         bullet_state = "ready"
 
     if bullet_state == "fire":
-        fire_bullet(bulletX, bulletY)
+        render_bullet(bulletX, bulletY)
         bulletY -= bulletYchange
 
     render_player(player.x, player.y)

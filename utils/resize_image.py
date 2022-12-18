@@ -1,6 +1,6 @@
 import cv2
 
-im = cv2.imread("background1.jpg")
+im = cv2.imread("./static/icons/unnamed.png")
 
 print("original dimensions: ", im.shape)
 
@@ -18,5 +18,5 @@ height = 600
 dim = (width, height)
 resized = cv2.resize(im, dim, interpolation=cv2.INTER_AREA)
 
-cv2.imwrite("background_resized.jpg", resized)
+cv2.imwrite("alien2.png", resized)
 print("Resized Dimensions : ", resized.shape)

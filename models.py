@@ -54,7 +54,7 @@ class PlayerFastShot(Player):
 
     speed: float = 0.3
     bullet_speed: float = 0.7
-    health: int = 3
+    health: int = 2
 
 
 # Enemy
@@ -71,7 +71,7 @@ class Enemy:
         - ychange: the value of change in y
     """
 
-    img = pygame.image.load("./static/icons/enemy.png")
+    img = pygame.image.load("./static/icons/alien64.png")
     x: int = None
     y: int = None
     xchange: float = 0.1
