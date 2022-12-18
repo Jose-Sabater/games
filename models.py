@@ -17,7 +17,7 @@ class Player:
     """
 
     img: pygame.Surface = pygame.image.load(
-        "./static/icons/space-invaders.png"
+        "./static/icons/player_big_health.png"
     )
     x: int = 368
     y: int = 500
