@@ -104,26 +104,7 @@ while running:
     elif player.x >= 736:
         player.x = 736
 
-    # Enemy movement 1 enemy
-    # enemya.x += enemya.xchange
-    # if enemya.x <= 0:
-    #     enemya.xchange = 0.1
-    #     enemya.y += enemya.ychange
-    # elif enemya.x >= 736:
-    #     enemya.xchange = -0.1
-    #     enemya.y += enemya.ychange
-    # render_enemy(enemya.x, enemya.y)
-    # # Collision
-    # collision = is_collision(enemya.x, enemya.y, bulletX, bulletY)
-    # if collision:
-    #     enemya.x = random.randint(0, 735)
-    #     enemya.y = random.randint(50, 150)
-    #     bulletY = 480
-    #     bullet_state = "ready"
-    #     score_value += 1
-    #     print(score_value)
-
-    for i in range(len(enemies)):
+    for i, _ in enumerate(enemies):
         enemies[i].x += enemies[i].xchange
         if enemies[i].x <= 0:
             enemies[i].xchange = 0.1
@@ -140,7 +121,6 @@ while running:
             bullet_state = "ready"
             score_value += 1
             print(score_value)
-
         render_enemy(enemies[i].x, enemies[i].y, i)
 
     # Bullet movement

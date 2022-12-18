@@ -72,7 +72,13 @@ class Enemy:
     """
 
     img = pygame.image.load("./static/icons/enemy.png")
-    x: int = random.randint(0, 735)
-    y: int = random.randint(50, 150)
+    x: int = None
+    y: int = None
     xchange: float = 0.1
     ychange: int = 40
+
+    def __post_init__(self):
+        if self.x is None:
+            self.x = random.randint(0, 735)
+        if self.y is None:
+            self.y = random.randint(50, 150)
