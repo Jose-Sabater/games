@@ -23,12 +23,8 @@ pygame.display.set_icon(icon)
 # Player
 player = PlayerFastShot()
 
-num_of_enemies = 3
-enemies = []
 
-
-for i in range(num_of_enemies):
-    enemies.append(Enemy())
+enemies = [Enemy() for i in range(3)]
 
 # Bullet
 bullet_img = pygame.image.load("./static/icons/bullet.png")
